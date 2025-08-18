@@ -1,0 +1,902 @@
+/****** Object:  Table [dbo].[Carrito_Producto]    Script Date: 18/08/2025 02:24:51 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Carrito_Producto](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[cantidad] [int] NOT NULL,
+	[carrito_id] [int] NULL,
+	[producto_id] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Carritos]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Carritos](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[fecha_creacion] [datetime] NOT NULL,
+	[estado] [nvarchar](20) NOT NULL,
+	[usuario_id] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Categorias]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Categorias](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[nombre] [nvarchar](100) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[DetallePedido]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[DetallePedido](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[pedido_id] [int] NOT NULL,
+	[producto_id] [int] NOT NULL,
+	[cantidad] [int] NOT NULL,
+	[precio_unitario] [decimal](10, 2) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Pedido_Producto]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Pedido_Producto](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[cantidad] [int] NOT NULL,
+	[precio_unitario] [decimal](10, 2) NOT NULL,
+	[pedido_id] [int] NULL,
+	[producto_id] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Pedidos]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Pedidos](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[fecha_pedido] [datetime] NOT NULL,
+	[total] [decimal](10, 2) NOT NULL,
+	[estado] [nvarchar](20) NOT NULL,
+	[usuario_id] [int] NULL,
+	[fecha] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Productos]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Productos](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[nombre] [nvarchar](100) NOT NULL,
+	[descripcion] [nvarchar](255) NULL,
+	[precio] [decimal](10, 2) NOT NULL,
+	[stock] [int] NOT NULL,
+	[categoria_id] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Roles]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Roles](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[nombre] [nvarchar](40) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[nombre] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Usuarios]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Usuarios](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[nombre] [nvarchar](100) NOT NULL,
+	[apellido] [nvarchar](100) NOT NULL,
+	[email] [nvarchar](255) NOT NULL,
+	[password] [nvarchar](255) NOT NULL,
+	[role_id] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[email] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Carritos] ADD  DEFAULT (getdate()) FOR [fecha_creacion]
+GO
+ALTER TABLE [dbo].[Pedidos] ADD  DEFAULT (getdate()) FOR [fecha_pedido]
+GO
+ALTER TABLE [dbo].[Pedidos] ADD  DEFAULT (getdate()) FOR [fecha]
+GO
+ALTER TABLE [dbo].[Carrito_Producto]  WITH CHECK ADD  CONSTRAINT [carritoProducto_carritos_fk] FOREIGN KEY([carrito_id])
+REFERENCES [dbo].[Carritos] ([id])
+GO
+ALTER TABLE [dbo].[Carrito_Producto] CHECK CONSTRAINT [carritoProducto_carritos_fk]
+GO
+ALTER TABLE [dbo].[Carrito_Producto]  WITH CHECK ADD  CONSTRAINT [carritoProducto_productos_fk] FOREIGN KEY([producto_id])
+REFERENCES [dbo].[Productos] ([id])
+GO
+ALTER TABLE [dbo].[Carrito_Producto] CHECK CONSTRAINT [carritoProducto_productos_fk]
+GO
+ALTER TABLE [dbo].[Carritos]  WITH CHECK ADD  CONSTRAINT [carritos_usuarios_fk] FOREIGN KEY([usuario_id])
+REFERENCES [dbo].[Usuarios] ([id])
+GO
+ALTER TABLE [dbo].[Carritos] CHECK CONSTRAINT [carritos_usuarios_fk]
+GO
+ALTER TABLE [dbo].[Pedido_Producto]  WITH CHECK ADD  CONSTRAINT [pedidoProducto_pedidos_fk] FOREIGN KEY([pedido_id])
+REFERENCES [dbo].[Pedidos] ([id])
+GO
+ALTER TABLE [dbo].[Pedido_Producto] CHECK CONSTRAINT [pedidoProducto_pedidos_fk]
+GO
+ALTER TABLE [dbo].[Pedido_Producto]  WITH CHECK ADD  CONSTRAINT [pedidoProducto_productos_fk] FOREIGN KEY([producto_id])
+REFERENCES [dbo].[Productos] ([id])
+GO
+ALTER TABLE [dbo].[Pedido_Producto] CHECK CONSTRAINT [pedidoProducto_productos_fk]
+GO
+ALTER TABLE [dbo].[Pedidos]  WITH CHECK ADD  CONSTRAINT [pedidos_usuarios_fk] FOREIGN KEY([usuario_id])
+REFERENCES [dbo].[Usuarios] ([id])
+GO
+ALTER TABLE [dbo].[Pedidos] CHECK CONSTRAINT [pedidos_usuarios_fk]
+GO
+ALTER TABLE [dbo].[Productos]  WITH CHECK ADD  CONSTRAINT [productos_categorias_fk] FOREIGN KEY([categoria_id])
+REFERENCES [dbo].[Categorias] ([id])
+GO
+ALTER TABLE [dbo].[Productos] CHECK CONSTRAINT [productos_categorias_fk]
+GO
+ALTER TABLE [dbo].[Usuarios]  WITH CHECK ADD  CONSTRAINT [usuarios_roles_fk] FOREIGN KEY([role_id])
+REFERENCES [dbo].[Roles] ([id])
+GO
+ALTER TABLE [dbo].[Usuarios] CHECK CONSTRAINT [usuarios_roles_fk]
+GO
+ALTER TABLE [dbo].[Carritos]  WITH CHECK ADD CHECK  (([estado]='FINALIZADO' OR [estado]='ACTIVO'))
+GO
+ALTER TABLE [dbo].[Pedidos]  WITH CHECK ADD CHECK  (([estado]='CANCELADO' OR [estado]='PROCESADO' OR [estado]='PENDIENTE'))
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ActualizarCategoria]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ActualizarCategoria]
+	@id INT,
+	@nombre NVARCHAR(100)
+AS
+BEGIN
+	UPDATE Categorias
+	SET
+		nombre = @nombre
+	WHERE id = @id;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ActualizarProducto]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ActualizarProducto]
+	@id INT,
+	@nombre NVARCHAR(100),
+	@descripcion NVARCHAR(255),
+	@precio DECIMAL(10,2),
+	@stock INT,
+	@categoria_id INT
+AS
+BEGIN
+	UPDATE Productos
+	SET
+		nombre = @nombre,
+		descripcion = @descripcion,
+		precio = @precio,
+		stock = @stock,
+		categoria_id = @categoria_id
+	WHERE id = @id
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ActualizarUsuario]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[sp_ActualizarUsuario]
+    @id INT,
+    @nombre NVARCHAR(50),
+    @apellido NVARCHAR(50),
+    @correo NVARCHAR(100),
+    @rol NVARCHAR(20)
+AS
+BEGIN
+    UPDATE Usuarios
+    SET nombre = @nombre,
+        apellido = @apellido,
+        email = @correo,
+        role_id = @rol
+    WHERE id = @id;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_AgregarProductoAlCarrito]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[sp_AgregarProductoAlCarrito]
+    @carrito_id INT,
+    @producto_id INT,
+    @cantidad INT
+AS
+BEGIN
+    DECLARE @existe INT;
+
+    SELECT @existe = COUNT(*) 
+    FROM Carrito_Producto 
+    WHERE carrito_id = @carrito_id AND producto_id = @producto_id;
+
+    IF @existe > 0
+    BEGIN
+        UPDATE Carrito_Producto
+        SET cantidad = cantidad + @cantidad
+        WHERE carrito_id = @carrito_id AND producto_id = @producto_id;
+    END
+    ELSE
+    BEGIN
+        INSERT INTO Carrito_Producto (carrito_id, producto_id, cantidad)
+        VALUES (@carrito_id, @producto_id, @cantidad);
+    END
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_AgregarProductosAlCarrito]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_AgregarProductosAlCarrito]
+    @carrito_id INT,
+    @productos TipoListaProductos READONLY
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF NOT EXISTS (
+        SELECT 1
+        FROM Carritos
+        WHERE id = @carrito_id AND estado = 'ACTIVO'
+    )
+    BEGIN
+        RAISERROR('El carrito no está activo o no existe.', 16, 1);
+        RETURN;
+    END
+
+    MERGE INTO Carrito_Producto AS target
+    USING (
+        SELECT @carrito_id AS carrito_id, producto_id, cantidad
+        FROM @productos
+    ) AS source
+    ON target.carrito_id = source.carrito_id AND target.producto_id = source.producto_id
+
+    WHEN MATCHED THEN 
+        UPDATE SET target.cantidad = target.cantidad + source.cantidad
+
+    WHEN NOT MATCHED THEN 
+        INSERT (carrito_id, producto_id, cantidad)
+        VALUES (source.carrito_id, source.producto_id, source.cantidad);
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_BuscarPedidosPorEstado]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- SP corregido: Buscar pedidos por estado
+CREATE   PROCEDURE [dbo].[sp_BuscarPedidosPorEstado]
+    @estado NVARCHAR(20)
+AS
+BEGIN
+    SELECT p.id, p.fecha_pedido, p.total, p.estado, u.nombre + ' ' + u.apellido AS usuario
+    FROM Pedidos p
+    INNER JOIN Usuarios u ON p.usuario_id = u.id
+    WHERE p.estado = @estado
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_BuscarPedidosPorUsuario]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- SP corregido: Buscar pedidos por usuario
+CREATE   PROCEDURE [dbo].[sp_BuscarPedidosPorUsuario]
+    @nombre_usuario NVARCHAR(100)
+AS
+BEGIN
+    SELECT p.id, p.fecha_pedido, p.total, p.estado, u.nombre + ' ' + u.apellido AS usuario
+    FROM Pedidos p
+    INNER JOIN Usuarios u ON p.usuario_id = u.id
+    WHERE u.nombre LIKE '%' + @nombre_usuario + '%'
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_CambiarEstadoPedido]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- SP corregido: Cambiar estado de un pedido
+CREATE   PROCEDURE [dbo].[sp_CambiarEstadoPedido]
+    @pedido_id INT,
+    @nuevo_estado NVARCHAR(20)
+AS
+BEGIN
+    UPDATE Pedidos
+    SET estado = @nuevo_estado
+    WHERE id = @pedido_id
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_CrearCarrito]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_CrearCarrito]
+    @usuario_id INT
+AS
+BEGIN
+    INSERT INTO Carritos (usuario_id, fecha_creacion, estado)
+    VALUES (@usuario_id, GETDATE(), 'Activo')
+
+    SELECT SCOPE_IDENTITY() -- devuelve el id del nuevo carrito
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_CrearCategoria]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_CrearCategoria]
+	@nombre NVARCHAR(100)
+AS
+BEGIN
+	INSERT INTO Categorias (nombre)
+	VALUES (@nombre);
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_CrearPedido]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_CrearPedido]
+    @usuario_id INT,
+    @detalle TipoDetallePedido READONLY
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @pedido_id INT;
+
+    INSERT INTO Pedidos (usuario_id, fecha, estado)
+    VALUES (@usuario_id, GETDATE(), 'Pendiente');
+
+    SET @pedido_id = SCOPE_IDENTITY();
+
+    INSERT INTO DetallePedido (pedido_id, producto_id, cantidad, precio_unitario)
+    SELECT @pedido_id, producto_id, cantidad, precio_unitario
+    FROM @detalle;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_CrearProducto]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_CrearProducto]
+	@nombre NVARCHAR(100),
+	@descripcion NVARCHAR(255),
+	@precio DECIMAL(10,2),
+	@stock INT,
+	@categoria_id INT
+AS
+BEGIN
+	INSERT INTO Productos
+	(nombre, descripcion, precio, stock, categoria_id)
+	VALUES (@nombre, @descripcion, @precio, @stock, @categoria_id);
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_CrearUsuario]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_CrearUsuario] 
+    @nombre NVARCHAR(100),
+    @apellido NVARCHAR(100),
+    @email NVARCHAR(255),
+    @password NVARCHAR(255),
+    @role_id INT
+AS
+BEGIN
+    INSERT INTO dbo.Usuarios (nombre, apellido, email, password, role_id)
+    VALUES (@nombre, @apellido, @email, @password, @role_id);
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_EliminarCategoria]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_EliminarCategoria]
+	@id INT
+AS
+BEGIN
+	DELETE FROM Categorias
+	WHERE id = @id;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_EliminarPedido]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- SP corregido: Eliminar pedido (y sus productos)
+CREATE   PROCEDURE [dbo].[sp_EliminarPedido]
+    @pedido_id INT
+AS
+BEGIN
+    DELETE FROM Pedido_Producto WHERE pedido_id = @pedido_id
+    DELETE FROM Pedidos WHERE id = @pedido_id
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_EliminarProducto]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_EliminarProducto]
+	@id INT
+AS
+BEGIN
+	DELETE FROM Productos
+	WHERE id = @id;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_EliminarProductoDelCarrito]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[sp_EliminarProductoDelCarrito]
+    @carrito_id INT,
+    @producto_id INT
+AS
+BEGIN
+    DELETE FROM Carrito_Producto
+    WHERE carrito_id = @carrito_id AND producto_id = @producto_id;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_EliminarUsuario]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[sp_EliminarUsuario]
+    @id INT
+AS
+BEGIN
+    -- Eliminar productos del carrito del usuario
+    DELETE FROM Carrito_Producto 
+    WHERE carrito_id IN (SELECT id FROM Carritos WHERE usuario_id = @id);
+
+    -- Eliminar carritos del usuario
+    DELETE FROM Carritos WHERE usuario_id = @id;
+
+    -- Eliminar productos de pedidos del usuario
+    DELETE FROM Pedido_Producto
+    WHERE pedido_id IN (SELECT id FROM Pedidos WHERE usuario_id = @id);
+
+    -- Eliminar pedidos del usuario
+    DELETE FROM Pedidos WHERE usuario_id = @id;
+
+    -- Finalmente, eliminar el usuario
+    DELETE FROM Usuarios WHERE id = @id;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_FinalizarCarrito]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_FinalizarCarrito]
+    @carrito_id INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @usuario_id INT;
+    DECLARE @total DECIMAL(10,2) = 0;
+
+    -- 1. Obtener usuario_id del carrito
+    SELECT @usuario_id = usuario_id FROM Carritos WHERE id = @carrito_id;
+
+    -- 2. Calcular el total del pedido
+    SELECT @total = SUM(cp.cantidad * p.precio)
+    FROM Carrito_Producto cp
+    INNER JOIN Productos p ON cp.producto_id = p.id
+    WHERE cp.carrito_id = @carrito_id;
+
+    -- 3. Insertar en tabla Pedidos
+    INSERT INTO Pedidos (fecha_pedido, total, estado, usuario_id)
+    VALUES (GETDATE(), @total, 'PENDIENTE', @usuario_id);
+
+    DECLARE @pedido_id INT = SCOPE_IDENTITY();
+
+    -- 4. Insertar en Pedido_Producto
+    INSERT INTO Pedido_Producto (cantidad, precio_unitario, pedido_id, producto_id)
+    SELECT cp.cantidad, p.precio, @pedido_id, p.id
+    FROM Carrito_Producto cp
+    INNER JOIN Productos p ON cp.producto_id = p.id
+    WHERE cp.carrito_id = @carrito_id;
+
+    -- 5. Actualizar estado del carrito
+    UPDATE Carritos
+    SET estado = 'FINALIZADO'
+    WHERE id = @carrito_id;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerCarritoConProductosPorUsuario]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[sp_ObtenerCarritoConProductosPorUsuario]
+    @carrito_id INT
+AS
+BEGIN
+    SELECT 
+        p.id,
+        p.nombre,
+        c.nombre AS categoria,
+        p.precio,
+        p.stock,
+        cp.cantidad
+    FROM Carrito_Producto cp
+    INNER JOIN Productos p ON cp.producto_id = p.id
+    INNER JOIN Categorias c ON p.categoria_id = c.id
+    WHERE cp.carrito_id = @carrito_id;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerCarritosPorUsuario]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ObtenerCarritosPorUsuario]
+    @usuario_id INT
+AS
+BEGIN
+    SELECT TOP 1 id
+    FROM Carritos
+    WHERE usuario_id = @usuario_id AND estado = 'Activo'
+    ORDER BY fecha_creacion DESC
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerCategoriaPorId]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ObtenerCategoriaPorId]
+	@id INT
+AS
+BEGIN
+	SELECT * FROM Categorias
+	WHERE id = @id;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerCategorias]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_ObtenerCategorias]
+AS
+BEGIN
+	SELECT * FROM Categorias;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerDetallesPedido]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ObtenerDetallesPedido]
+    @pedido_id INT
+AS
+BEGIN
+    SELECT 
+        p.id AS producto_id,
+        p.nombre AS nombre,
+        c.nombre AS categoria,  -- <-- usa el nombre real
+        p.precio AS precio,
+        pp.cantidad AS cantidad
+    FROM Pedido_Producto pp
+    INNER JOIN Productos p ON p.id = pp.producto_id
+    INNER JOIN Categorias c ON p.categoria_id = c.id
+    WHERE pp.pedido_id = @pedido_id
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerDetallesPedido_Admin]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[sp_ObtenerDetallesPedido_Admin]
+    @pedido_id INT
+AS
+BEGIN
+    SELECT 
+        p.nombre AS nombre,
+        pp.cantidad AS cantidad,
+        pp.precio_unitario AS precio_unitario
+    FROM Pedido_Producto pp
+    INNER JOIN Productos p ON p.id = pp.producto_id
+    WHERE pp.pedido_id = @pedido_id
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerDetallesPedido_Usuario]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[sp_ObtenerDetallesPedido_Usuario]
+    @pedido_id INT
+AS
+BEGIN
+    SELECT 
+        p.id AS producto_id,
+        p.nombre AS nombre,
+        c.nombre AS categoria,
+        p.precio AS precio,
+        pp.cantidad AS cantidad
+    FROM Pedido_Producto pp
+    INNER JOIN Productos p ON p.id = pp.producto_id
+    INNER JOIN Categorias c ON p.categoria_id = c.id
+    WHERE pp.pedido_id = @pedido_id
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerHistorialPedidosPorUsuario]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ObtenerHistorialPedidosPorUsuario]
+    @usuario_id INT
+AS
+BEGIN
+    SELECT 
+        c.id AS carrito_id,
+        c.fecha_creacion,
+        p.nombre AS nombre_producto,
+        p.descripcion,
+        cp.cantidad,
+        p.precio,
+        (cp.cantidad * p.precio) AS total_producto
+    FROM Carritos AS c
+    INNER JOIN Carrito_Producto AS cp ON c.id = cp.carrito_id
+    INNER JOIN Productos AS p ON cp.producto_id = p.id
+    WHERE c.usuario_id = @usuario_id
+      AND c.estado = 'FINALIZADO'
+    ORDER BY c.fecha_creacion DESC;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerPedidosPorUsuario]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ObtenerPedidosPorUsuario]
+    @usuario_id INT
+AS
+BEGIN
+    SELECT 
+        id,
+        fecha_pedido,
+        total,
+        estado
+    FROM Pedidos
+    WHERE usuario_id = @usuario_id
+    ORDER BY fecha_pedido DESC;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerProductoPorId]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[sp_ObtenerProductoPorId]
+	@id INT
+AS
+BEGIN
+	SELECT p.*, c.nombre as nombre_categoria FROM Productos as p
+	INNER JOIN Categorias as c
+	ON p.categoria_id = c.id
+	WHERE p.id = @id
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerProductos]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ObtenerProductos]
+AS
+BEGIN
+    SELECT 
+        p.id,
+        p.nombre,
+        p.descripcion,
+        p.precio,
+        p.stock,
+        c.nombre AS nombre_categoria
+    FROM Productos p
+    JOIN Categorias c ON p.categoria_id = c.id;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerProductosDelCarrito]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ObtenerProductosDelCarrito]
+    @carrito_id INT
+AS
+BEGIN
+    SELECT 
+        p.id,
+        p.nombre,
+        c.nombre AS categoria,
+        p.precio,
+        cp.cantidad AS stock
+    FROM Carrito_Producto cp
+    INNER JOIN Productos p ON cp.producto_id = p.id
+    INNER JOIN Categorias c ON p.categoria_id = c.id
+    WHERE cp.carrito_id = @carrito_id;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerProductosPorCategoria]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ObtenerProductosPorCategoria]
+    @categoria NVARCHAR(100)
+AS
+BEGIN
+    SELECT 
+        p.id,
+        p.nombre,
+        p.descripcion,
+        p.precio,
+        p.stock,
+        c.nombre AS nombre_categoria
+    FROM Productos p
+    INNER JOIN Categorias c ON p.categoria_id = c.id
+    WHERE c.nombre = @categoria;
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerTodosLosPedidos]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- SP corregido: Obtener todos los pedidos (para frmGestionPedidos - Admin)
+CREATE   PROCEDURE [dbo].[sp_ObtenerTodosLosPedidos]
+AS
+BEGIN
+    SELECT p.id, p.fecha_pedido, p.total, p.estado, u.nombre + ' ' + u.apellido AS usuario
+    FROM Pedidos p
+    INNER JOIN Usuarios u ON p.usuario_id = u.id
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerUsuarioPorId]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ObtenerUsuarioPorId]
+	@id INT
+AS
+BEGIN
+	SELECT u.nombre, u.apellido, u.email, r.nombre FROM Usuarios as u
+	INNER JOIN Roles as r ON u.role_id = r.id
+	WHERE u.id = @id
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_ObtenerUsuarios]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_ObtenerUsuarios]
+AS
+BEGIN
+    SELECT 
+        u.id AS Id,
+        u.nombre AS Nombre, 
+        u.apellido AS Apellido, 
+        u.email AS Correo, 
+        r.nombre AS Rol 
+    FROM Usuarios AS u
+    INNER JOIN Roles AS r ON u.role_id = r.id
+END
+GO
+/****** Object:  StoredProcedure [dbo].[sp_VerificarCredenciales]    Script Date: 18/08/2025 02:24:52 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[sp_VerificarCredenciales]
+    @correo NVARCHAR(255),
+    @password NVARCHAR(255)
+AS
+BEGIN
+    SELECT u.id, u.nombre, u.apellido, u.role_id, r.nombre AS rol
+    FROM Usuarios AS u
+    INNER JOIN Roles AS r ON u.role_id = r.id
+    WHERE u.email = @correo AND u.password = @password;
+END;
+GO
